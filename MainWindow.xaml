@@ -1,0 +1,88 @@
+﻿<Window x:Class="CarServiceApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Особистий кабінет клієнта — Автосервіс" Height="620" Width="920"
+        WindowStartupLocation="CenterScreen" Background="{StaticResource BackgroundColor}">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Сучасна темна шапка -->
+        <Border Grid.Row="0" Background="#1E293B" Padding="15,12" CornerRadius="8" Margin="0,0,0,15">
+            <DockPanel>
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" VerticalAlignment="Center">
+                    <TextBlock Text="🚘" FontSize="20" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                    <TextBlock Text="Особистий кабінет клієнта" FontSize="18" FontWeight="Bold" Foreground="White" VerticalAlignment="Center"/>
+                </StackPanel>
+                <Button Content="Вийти" Style="{StaticResource PrimaryButtonStyle}" 
+                        Background="#EF4444" Foreground="White" Width="72" 
+                        Click="BtnLogout_Click" DockPanel.Dock="Right" FontWeight="SemiBold" Margin="0,10,-500,0"/>
+            </DockPanel>
+        </Border>
+
+        <!-- Вкладки кабінету -->
+        <TabControl Grid.Row="1" Background="Transparent" BorderThickness="0">
+
+            <!-- ВКЛАДКА 1: Каталог послуг -->
+            <TabItem Header="📋 Каталог послуг" FontSize="14" FontWeight="SemiBold">
+                <Grid Margin="0,10,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Картка з таблицею каталогу -->
+                    <Border Grid.Row="0" Background="White" CornerRadius="8" BorderBrush="#CBD5E1" BorderThickness="1" Padding="5" Margin="0,0,0,12">
+                        <DataGrid x:Name="DgCatalog" AutoGenerateColumns="False" IsReadOnly="True"
+                                  GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#F1F5F9"
+                                  RowHeight="36" Background="Transparent" BorderThickness="0">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Назва послуги" Binding="{Binding Title}" Width="2*"/>
+                                <DataGridTextColumn Header="Категорія" Binding="{Binding Category}" Width="110"/>
+                                <DataGridTextColumn Header="Вартість (грн)" Binding="{Binding Price}" Width="110"/>
+                                <DataGridTextColumn Header="Час виконання" Binding="{Binding Duration}" Width="110"/>
+                                <DataGridTextColumn Header="Опис" Binding="{Binding Description}" Width="3*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+
+                    <Button Content="📅 Записатися на обрану послугу" Style="{StaticResource PrimaryButtonStyle}" 
+                            Grid.Row="1" HorizontalAlignment="Right" Width="240" Height="38" 
+                            FontWeight="Bold" Click="BtnBookFromCatalog_Click"/>
+                </Grid>
+            </TabItem>
+
+            <!-- ВКЛАДКА 2: Поточний ремонт (Активні замовлення) -->
+            <TabItem Header="🚗 Поточний ремонт (Статус)" FontSize="14" FontWeight="SemiBold">
+                <Grid Margin="0,10,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Картка з таблицею активних замовлень -->
+                    <Border Grid.Row="0" Background="White" CornerRadius="8" BorderBrush="#CBD5E1" BorderThickness="1" Padding="5" Margin="0,0,0,12">
+                        <DataGrid x:Name="DgActiveOrders" AutoGenerateColumns="False" IsReadOnly="True"
+                                  GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#F1F5F9"
+                                  RowHeight="36" Background="Transparent" BorderThickness="0">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="№ Заявки" Binding="{Binding Id}" Width="90"/>
+                                <DataGridTextColumn Header="Послуга" Binding="{Binding ServiceType}" Width="2*"/>
+                                <DataGridTextColumn Header="Вартість (грн)" Binding="{Binding Price}" Width="120"/>
+                                <DataGridTextColumn Header="Поточний статус" Binding="{Binding Status}" Width="160"/>
+                                <DataGridTextColumn Header="Дата замовлення" Binding="{Binding OrderDate, StringFormat=\{0:dd.MM.yyyy HH:mm\}}" Width="150"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+
+                    <Button Content="➕ Оформити новий запис" Style="{StaticResource PrimaryButtonStyle}" 
+                            Background="#10B981" Grid.Row="1" HorizontalAlignment="Right" Width="220" Height="38" 
+                            FontWeight="Bold" Click="BtnNewBooking_Click"/>
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+    </Grid>
+</Window>
